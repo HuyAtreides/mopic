@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  writer:
+    image: alpine
+    container_name: writer
+    volumes:
+      - ./data/torrents:/
+    command: sh -c "echo 'Hello from writer again!' > /data/hello.txt && tail -f /dev/null"
+
+  reader:
+    image: alpine
+    container_name: reader
+    volumes:
+      - ./shared-1:/data
+    command: sh -c "tail -f /data/hello.txt"
