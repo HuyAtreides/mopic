@@ -27,3 +27,22 @@ services:
     ports:
       - 9696:9696
     restart: unless-stopped
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Etc/UTC
+      - WEBUI_PORT=5000/TCP
+      - TORRENTING_PORT=6881
+    volumes:
+      - ./config/qbittorent:/config
+      - ./data/torrents:/data/torrents #optional
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
