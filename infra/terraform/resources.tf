@@ -65,14 +65,11 @@ resource "aws_iam_role" "mopic_k8s_node" {
   })
 }
 
-resource "aws_eks_identity_provider_config" "mopic_k8s_identity_provider_config" {
-  cluster_name = aws_eks_cluster.mopic_k8s.name
+resource "aws_iam_openid_connect_provider" "eks" {
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = ["9e99a48a9960b14926bb7f3b02e22da0ecd40f86"] # Default thumbprint for EKS OIDC
 
-  oidc {
-    client_id                     = "sts.amazonaws.com"
-    issuer_url                    = aws_eks_cluster.mopic_k8s.identity.0.oidc.0.issuer
-    identity_provider_config_name = "mopic_k8s_identity_provider_config"
-  }
+  url = aws_eks_cluster.mopic_k8s.identity[0].oidc[0].issuer
 }
 
 resource "aws_iam_role_policy_attachment" "mopic_k8s_node_AmazonEKSWorkerNodeMinimalPolicy" {
@@ -132,7 +129,7 @@ resource "aws_iam_role_policy_attachment" "mopic_k8s_cluster_AmazonEKSNetworking
 // S3 Resource
 
 resource "aws_s3_bucket" "mopic_media" {
-  bucket = "mopic_media"
+  bucket = "mopic-media"
 }
 
 resource "aws_iam_role" "mopic_media_manager" {
@@ -144,24 +141,26 @@ resource "aws_iam_role" "mopic_media_manager" {
       {
         "Effect" : "Allow",
         "Principal" : {
-          "Federated" : "arn:aws:iam::${data.aws_caller_identity.current.account_id
-          }}:${aws_eks_cluster.mopic_k8s.identity.0.oidc.0.issuer}"
+          "Federated" : "${aws_iam_openid_connect_provider.eks.arn}"
         },
         "Action" : "sts:AssumeRoleWithWebIdentity",
         "Condition" : {
           "StringEquals" : {
-            "${aws_eks_cluster.mopic_k8s.identity.0.oidc.0.issuer}:sub" : "system:serviceaccount:kube-system:s3-csi-driver-sa",
-            "${aws_eks_cluster.mopic_k8s.identity.0.oidc.0.issuer}:aud" : "sts.amazonaws.com"
+            "${replace(aws_eks_cluster.mopic_k8s.identity[0].oidc[0].issuer, "https://", "")}:sub" = "system:serviceaccount:kube-system:s3-csi-driver-sa",
+            "${replace(aws_eks_cluster.mopic_k8s.identity[0].oidc[0].issuer, "https://", "")}:aud" = "sts.amazonaws.com"
           }
         }
       }
     ]
   })
+
+  depends_on = [
+    aws_iam_openid_connect_provider.eks
+  ]
 }
 
-resource "aws_iam_role_policy" "mopic_media_bucket_policy" {
+resource "aws_iam_policy" "mopic_media_bucket_policy" {
   name = "mopic_media_bucket_policy"
-  role = aws_iam_role.mopic_media_manager.name
 
   policy = jsonencode({
     "Version" : "2012-10-17",
@@ -195,10 +194,33 @@ resource "aws_iam_role_policy" "mopic_media_bucket_policy" {
 
 resource "aws_iam_role_policy_attachment" "mopic_media_manager_role_attach" {
   role       = aws_iam_role.mopic_media_manager.name
-  policy_arn = aws_iam_role_policy.mopic_media_bucket_policy.id
+  policy_arn = aws_iam_policy.mopic_media_bucket_policy.arn
 }
 
 resource "aws_eks_addon" "mopic_k8s_s3_csi_driver" {
   cluster_name = aws_eks_cluster.mopic_k8s.name
   addon_name   = "aws-mountpoint-s3-csi-driver"
+}
+
+provider "kubernetes" {
+  host                   = data.aws_eks_cluster.mopic_k8s.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.mopic_k8s.certificate_authority[0].data)
+  token                  = data.aws_eks_cluster_auth.mopic_k8s.token
+}
+
+resource "kubernetes_config_map" "aws_auth" {
+  metadata {
+    name      = "aws-auth"
+    namespace = "kube-system"
+  }
+
+  data = {
+    mapUsers = yamlencode([
+      {
+        userarn  = data.aws_caller_identity.current.arn
+        username = "eks-admin"
+        groups   = ["system:masters"]
+      }
+    ])
+  }
 }
