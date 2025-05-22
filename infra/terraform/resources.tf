@@ -202,12 +202,6 @@ resource "aws_eks_addon" "mopic_k8s_s3_csi_driver" {
   addon_name   = "aws-mountpoint-s3-csi-driver"
 }
 
-provider "kubernetes" {
-  host                   = data.aws_eks_cluster.mopic_k8s.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.mopic_k8s.certificate_authority[0].data)
-  token                  = data.aws_eks_cluster_auth.mopic_k8s.token
-}
-
 resource "kubernetes_config_map" "aws_auth" {
   metadata {
     name      = "aws-auth"
