@@ -185,7 +185,8 @@ resource "aws_iam_policy" "mopic_media_bucket_policy" {
           "s3:ListBucket"
         ],
         "Resource" : [
-          "arn:aws:s3:::${data.aws_s3_bucket.mopic_s3_bucket.id}"
+          "arn:aws:s3:::${data.aws_s3_bucket.mopic_s3_bucket_data.id}",
+          "arn:aws:s3:::${data.aws_s3_bucket.mopic_s3_bucket_config.id}"
         ]
       },
       {
@@ -198,7 +199,8 @@ resource "aws_iam_policy" "mopic_media_bucket_policy" {
           "s3:DeleteObject"
         ],
         "Resource" : [
-          "arn:aws:s3:::${data.aws_s3_bucket.mopic_s3_bucket.id}/*"
+          "arn:aws:s3:::${data.aws_s3_bucket.mopic_s3_bucket_data.id}/*",
+          "arn:aws:s3:::${data.aws_s3_bucket.mopic_s3_bucket_config.id}/*"
         ]
       }
     ]

@@ -12,9 +12,9 @@ spec:
   #   - allow-delete
   csi:
     driver: s3.csi.aws.com # required
-    volumeHandle: s3-csi-driver-volume # Must be unique
+    volumeHandle: mopic-data # Must be unique
     volumeAttributes:
-      bucketName: s3-csi-bucket-name
+      bucketName: mopic-data
   claimRef: # To ensure no other PVCs can claim this PV
     namespace: default # Namespace is required even though it's in "default" namespace.
     name: mopic_storage_claim
@@ -34,9 +34,9 @@ spec:
   #   - allow-delete
   csi:
     driver: s3.csi.aws.com # required
-    volumeHandle: s3-csi-driver-volume # Must be unique
+    volumeHandle: mopic-config # Must be unique
     volumeAttributes:
-      bucketName: s3-csi-bucket-name
+      bucketName: mopic-config
   claimRef: # To ensure no other PVCs can claim this PV
     namespace: default # Namespace is required even though it's in "default" namespace.
     name: mopic_storage_claim

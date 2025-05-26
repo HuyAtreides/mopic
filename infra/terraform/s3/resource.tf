@@ -1,3 +1,7 @@
-resource "aws_s3_bucket" "mopic_media" {
-  bucket = "mopic-media"
+resource "aws_s3_bucket" "mopic_data" {
+  bucket = "mopic-data"
+}
+
+resource "aws_s3_bucket" "mopic_config" {
+  bucket = "mopic-config"
 }
