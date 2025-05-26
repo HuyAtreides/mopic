@@ -12,7 +12,6 @@ spec:
       labels:
         app: mopic
     spec:
-      restartPolicy: OnFailure
       containers:
         - name: radarr
           image: lscr.io/linuxserver/radarr:latest
@@ -29,9 +28,9 @@ spec:
               value: '002'
           volumeMounts:
             - mountPath: /data
-              name: mopic_data_storage
-            - mountPath: /config/radarr
-              name: mopic_config_storage
+              name: mopic-data-storage
+            - mountPath: /config
+              name: mopic-config-storage
         - name: prowlarr
           image: lscr.io/linuxserver/prowlarr:latest
           ports:
@@ -47,7 +46,7 @@ spec:
               value: '002'
           volumeMounts:
             - mountPath: /config/prowlarr
-              name: mopic_config_storage
+              name: mopic-config-storage
         - name: qbittorrent
           image: lscr.io/linuxserver/qbittorrent:latest
           ports:
@@ -67,9 +66,9 @@ spec:
               value: '6881'
           volumeMounts:
             - mountPath: /data/qbittorents
-              name: mopic_data_storage
+              name: mopic-data-storage
             - mountPath: /config
-              name: mopic_config_storage
+              name: mopic-config-storage
         - name: jellyfin
           image: lscr.io/linuxserver/jellyfin:latest
           ports:
@@ -85,13 +84,13 @@ spec:
               value: Etc/UTC
           volumeMounts:
             - mountPath: /data/media
-              name: mopic_data_storage
+              name: mopic-data-storage
             - mountPath: /config
-              name: mopic_config_storage
+              name: mopic-config-storage
       volumes:
-        - name: mopic_data_storage
+        - name: mopic-data-storage
           persistentVolumeClaim:
-            claimName: mopic_data_storage_claim
-        - name: mopic_config_storage
+            claimName: mopic-data-storage-claim
+        - name: mopic-config-storage
           persistentVolumeClaim:
-            claimName: mopic_config_storage_claim
+            claimName: mopic-config-storage-claim

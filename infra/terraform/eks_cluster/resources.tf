@@ -213,8 +213,9 @@ resource "aws_iam_role_policy_attachment" "mopic_media_manager_role_attach" {
 }
 
 resource "aws_eks_addon" "mopic_k8s_s3_csi_driver" {
-  cluster_name = aws_eks_cluster.mopic_k8s.name
-  addon_name   = "aws-mountpoint-s3-csi-driver"
+  cluster_name             = aws_eks_cluster.mopic_k8s.name
+  addon_name               = "aws-mountpoint-s3-csi-driver"
+  service_account_role_arn = aws_iam_role.mopic_media_manager.arn
 }
 
 resource "kubernetes_config_map" "aws_auth" {
