@@ -4,7 +4,8 @@ resource "aws_eks_cluster" "mopic_k8s" {
   name = "mopic_k8s"
 
   access_config {
-    authentication_mode = "API"
+    authentication_mode                         = "API_AND_CONFIG_MAP"
+    bootstrap_cluster_creator_admin_permissions = true
   }
 
   role_arn = aws_iam_role.mopic_k8s_cluster.arn
@@ -48,6 +49,22 @@ resource "aws_eks_cluster" "mopic_k8s" {
     aws_iam_role_policy_attachment.mopic_k8s_cluster_AmazonEKSNetworkingPolicy,
   ]
 }
+
+# resource "aws_eks_addon" "vpc_cni" {
+#   cluster_name = aws_eks_cluster.mopic_k8s.name
+#   addon_name   = "vpc-cni"
+# }
+
+resource "aws_eks_addon" "kube_proxy" {
+  cluster_name = aws_eks_cluster.mopic_k8s.name
+  addon_name   = "kube-proxy"
+}
+
+resource "aws_eks_addon" "coredns" {
+  cluster_name = aws_eks_cluster.mopic_k8s.name
+  addon_name   = "coredns"
+}
+
 
 resource "aws_iam_role" "mopic_k8s_node" {
   name = "mopic_k8s_node"
@@ -126,11 +143,7 @@ resource "aws_iam_role_policy_attachment" "mopic_k8s_cluster_AmazonEKSNetworking
   role       = aws_iam_role.mopic_k8s_cluster.name
 }
 
-// S3 Resource
-
-resource "aws_s3_bucket" "mopic_media" {
-  bucket = "mopic-media"
-}
+// S3 Role Resource
 
 resource "aws_iam_role" "mopic_media_manager" {
   name = "mopic_media_manager"
@@ -172,7 +185,7 @@ resource "aws_iam_policy" "mopic_media_bucket_policy" {
           "s3:ListBucket"
         ],
         "Resource" : [
-          "arn:aws:s3:::${aws_s3_bucket.mopic_media.id}"
+          "arn:aws:s3:::${data.aws_s3_bucket.mopic_s3_bucket.id}"
         ]
       },
       {
@@ -185,7 +198,7 @@ resource "aws_iam_policy" "mopic_media_bucket_policy" {
           "s3:DeleteObject"
         ],
         "Resource" : [
-          "arn:aws:s3:::${aws_s3_bucket.mopic_media.id}/*"
+          "arn:aws:s3:::${data.aws_s3_bucket.mopic_s3_bucket.id}/*"
         ]
       }
     ]
@@ -212,7 +225,7 @@ resource "kubernetes_config_map" "aws_auth" {
     mapUsers = yamlencode([
       {
         userarn  = data.aws_caller_identity.current.arn
-        username = "eks-admin"
+        username = data.aws_caller_identity.current.arn
         groups   = ["system:masters"]
       }
     ])
