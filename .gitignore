@@ -1,2 +1,3 @@
 infra/k8s/config
 infra/terraform/**/.terraform
+infra/terraform/**/.terraform.*
