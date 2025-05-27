@@ -60,13 +60,16 @@ spec:
               value: Etc/UTC
           volumeMounts:
             - mountPath: /data
-              name: mopic-data-storage
-            - mountPath: /config
-              name: mopic-config-storage
+              name: mopic-jellyfin-data-storage
+            # - mountPath: /config
+            #   name: mopic-config-storage
       volumes:
         - name: mopic-radarr-data-storage
           persistentVolumeClaim:
             claimName: mopic-radarr-data-storage-claim
+        - name: mopic-jellyfin-data-storage
+          persistentVolumeClaim:
+            claimName: mopic-jellyfin-data-storage-claim
         - name: mopic-qbittorrent-data-storage
           persistentVolumeClaim:
             claimName: mopic-qbittorrent-data-storage-claim

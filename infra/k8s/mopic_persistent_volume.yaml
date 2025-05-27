@@ -4,7 +4,7 @@ metadata:
   name: mopic-radarr-data-storage
 spec:
   capacity:
-    storage: 1200Gi
+    storage: 120Gi
   accessModes:
     - ReadWriteMany
   storageClassName: ''
@@ -26,10 +26,35 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
+  name: mopic-jellyfin-data-storage
+spec:
+  capacity:
+    storage: 120Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ''
+  mountOptions:
+    - allow-delete
+    - allow-overwrite
+    - allow-root
+    - prefix /mopic/data/media
+  csi:
+    driver: s3.csi.aws.com # required
+    volumeHandle: mopic-data # Must be unique
+    volumeAttributes:
+      bucketName: mopic-data
+  claimRef: # To ensure no other PVCs can claim this PV
+    namespace: default # Namespace is required even though it's in "default" namespace.
+    name: mopic-jellyfin-data-storage-claim
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
   name: mopic-qbittorrent-data-storage
 spec:
   capacity:
-    storage: 1200Gi
+    storage: 120Gi
   accessModes:
     - ReadWriteMany
   storageClassName: ''
