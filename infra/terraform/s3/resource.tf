@@ -8,7 +8,7 @@ resource "aws_s3_bucket" "mopic_config" {
 
 resource "aws_s3_object" "mopic_data_radarr" {
   bucket  = aws_s3_bucket.mopic_data.id
-  key     = "/mopic/data/radarr"
+  key     = "/mopic/data/radarr/"
   content = ""
 }
 
@@ -27,18 +27,18 @@ resource "aws_s3_object" "mopic_data_media" {
 
 resource "aws_s3_object" "mopic_config_radarr" {
   bucket  = aws_s3_bucket.mopic_config.id
-  key     = "/mopic/config/radarr"
+  key     = "/mopic/config/radarr/"
   content = ""
 }
 
 resource "aws_s3_object" "mopic_config_prowlarr" {
   bucket  = aws_s3_bucket.mopic_config.id
-  key     = "/mopic/config/prowlarr"
+  key     = "/mopic/config/prowlarr/"
   content = ""
 }
 
-resource "aws_s3_object" "mopic_config_qbittorent" {
+resource "aws_s3_object" "mopic_config_qbittorrent" {
   bucket  = aws_s3_bucket.mopic_config.id
-  key     = "/mopic/config/qbittorrent"
+  key     = "/mopic/config/qbittorrent/"
   content = ""
 }

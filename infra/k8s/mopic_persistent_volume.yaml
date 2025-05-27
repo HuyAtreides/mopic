@@ -37,7 +37,7 @@ spec:
     - allow-delete
     - allow-overwrite
     - allow-root
-    - prefix /mopic/data/media
+    - prefix /mopic/data/media/
   csi:
     driver: s3.csi.aws.com # required
     volumeHandle: mopic-data # Must be unique
@@ -62,7 +62,7 @@ spec:
     - allow-delete
     - allow-overwrite
     - allow-root
-    - prefix /mopic/data/qbittorrent
+    - prefix /mopic/data/qbittorrent/
   csi:
     driver: s3.csi.aws.com # required
     volumeHandle: mopic-data # Must be unique
@@ -87,7 +87,7 @@ spec:
     - allow-delete
     - allow-overwrite
     - allow-root
-    - prefix /mopic/config/radarr
+    - prefix /mopic/config/radarr/
   csi:
     driver: s3.csi.aws.com # required
     volumeHandle: mopic-config # Must be unique
@@ -112,7 +112,7 @@ spec:
     - allow-delete
     - allow-overwrite
     - allow-root
-    - prefix /mopic/config/prowlarr
+    - prefix /mopic/config/prowlarr/
   csi:
     driver: s3.csi.aws.com # required
     volumeHandle: mopic-config # Must be unique
