@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mopic-radarr-data-storage-claim
+spec:
+  accessModes:
+    - ReadWriteMany # Supported options: ReadWriteMany / ReadOnlyMany
+  storageClassName: '' # Required for static provisioning
+  resources:
+    requests:
+      storage: 1200Gi # Ignored, required
+  volumeName: mopic-radarr-data-storage
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mopic-qbittorrent-data-storage-claim
+spec:
+  accessModes:
+    - ReadWriteMany # Supported options: ReadWriteMany / ReadOnlyMany
+  storageClassName: '' # Required for static provisioning
+  resources:
+    requests:
+      storage: 1200Gi # Ignored, required
+  volumeName: mopic-qbittorrent-data-storage
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mopic-radarr-config-storage-claim
+spec:
+  accessModes:
+    - ReadWriteMany # Supported options: ReadWriteMany / ReadOnlyMany
+  storageClassName: '' # Required for static provisioning
+  resources:
+    requests:
+      storage: 1Gi # Ignored, required
+  volumeName: mopic-radarr-config-storage
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mopic-prowlarr-config-storage-claim
+spec:
+  accessModes:
+    - ReadWriteMany # Supported options: ReadWriteMany / ReadOnlyMany
+  storageClassName: '' # Required for static provisioning
+  resources:
+    requests:
+      storage: 1Gi # Ignored, required
+  volumeName: mopic-prowlarr-config-storage
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mopic-qbittorrent-config-storage-claim
+spec:
+  accessModes:
+    - ReadWriteMany # Supported options: ReadWriteMany / ReadOnlyMany
+  storageClassName: '' # Required for static provisioning
+  resources:
+    requests:
+      storage: 1Gi # Ignored, required
+  volumeName: mopic-qbittorrent-config-storage

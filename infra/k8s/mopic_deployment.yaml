@@ -20,13 +20,11 @@ spec:
           env:
             - name: TZ
               value: Etc/UTC
-            - name: UMASK
-              value: '002'
           volumeMounts:
             - mountPath: /data
-              name: mopic-data-storage
+              name: mopic-radarr-data-storage
             - mountPath: /config
-              name: mopic-config-storage
+              name: mopic-radarr-config-storage
         - name: prowlarr
           image: lscr.io/linuxserver/prowlarr:latest
           ports:
@@ -34,11 +32,9 @@ spec:
           env:
             - name: TZ
               value: Etc/UTC
-            - name: UMASK
-              value: '002'
           volumeMounts:
             - mountPath: /config
-              name: mopic-config-storage
+              name: mopic-prowlarr-config-storage
         - name: qbittorrent
           image: lscr.io/linuxserver/qbittorrent:latest
           ports:
@@ -46,24 +42,20 @@ spec:
           env:
             - name: TZ
               value: Etc/UTC
-            - name: UMASK
-              value: '002'
             - name: WEBUI_PORT
               value: '5000'
             - name: TORRENTING_PORT
               value: '6881'
           volumeMounts:
             - mountPath: /data
-              name: mopic-data-storage
+              name: mopic-qbittorrent-data-storage
             - mountPath: /config
-              name: mopic-config-storage
+              name: mopic-qbittorrent-config-storage
         - name: jellyfin
           image: lscr.io/linuxserver/jellyfin:latest
           ports:
             - containerPort: 8096
           env:
-            - name: UMASK
-              value: '002'
             - name: TZ
               value: Etc/UTC
           volumeMounts:
@@ -72,9 +64,18 @@ spec:
             - mountPath: /config
               name: mopic-config-storage
       volumes:
-        - name: mopic-data-storage
+        - name: mopic-radarr-data-storage
           persistentVolumeClaim:
-            claimName: mopic-data-storage-claim
-        - name: mopic-config-storage
+            claimName: mopic-radarr-data-storage-claim
+        - name: mopic-qbittorrent-data-storage
           persistentVolumeClaim:
-            claimName: mopic-config-storage-claim
+            claimName: mopic-qbittorrent-data-storage-claim
+        - name: mopic-radarr-config-storage
+          persistentVolumeClaim:
+            claimName: mopic-radarr-config-storage-claim
+        - name: mopic-prowlarr-config-storage
+          persistentVolumeClaim:
+            claimName: mopic-prowlarr-config-storage-claim
+        - name: mopic-qbittorrent-config-storage
+          persistentVolumeClaim:
+            claimName: mopic-qbittorrent-config-storage-claim
