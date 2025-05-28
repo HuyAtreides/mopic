@@ -15,7 +15,7 @@ spec:
     - prefix /mopic/data/
   csi:
     driver: s3.csi.aws.com # required
-    volumeHandle: mopic-data # Must be unique
+    volumeHandle: mopic-radarr-data-storage # Must be unique
     volumeAttributes:
       bucketName: mopic-data
   claimRef: # To ensure no other PVCs can claim this PV
@@ -40,7 +40,7 @@ spec:
     - prefix /mopic/data/media/
   csi:
     driver: s3.csi.aws.com # required
-    volumeHandle: mopic-data # Must be unique
+    volumeHandle: mopic-jellyfin-data-storage # Must be unique
     volumeAttributes:
       bucketName: mopic-data
   claimRef: # To ensure no other PVCs can claim this PV
@@ -65,7 +65,7 @@ spec:
     - prefix /mopic/data/qbittorrent/
   csi:
     driver: s3.csi.aws.com # required
-    volumeHandle: mopic-data # Must be unique
+    volumeHandle: mopic-qbittorrent-data-storage # Must be unique
     volumeAttributes:
       bucketName: mopic-data
   claimRef: # To ensure no other PVCs can claim this PV
@@ -90,7 +90,7 @@ spec:
     - prefix /mopic/config/radarr/
   csi:
     driver: s3.csi.aws.com # required
-    volumeHandle: mopic-config # Must be unique
+    volumeHandle: mopic-radarr-config-storage # Must be unique
     volumeAttributes:
       bucketName: mopic-config
   claimRef: # To ensure no other PVCs can claim this PV
@@ -115,7 +115,7 @@ spec:
     - prefix /mopic/config/prowlarr/
   csi:
     driver: s3.csi.aws.com # required
-    volumeHandle: mopic-config # Must be unique
+    volumeHandle: mopic-prowlarr-config-storage # Must be unique
     volumeAttributes:
       bucketName: mopic-config
   claimRef: # To ensure no other PVCs can claim this PV
@@ -140,9 +140,34 @@ spec:
     - prefix /mopic/config/qbittorrent/
   csi:
     driver: s3.csi.aws.com # required
-    volumeHandle: mopic-config # Must be unique
+    volumeHandle: mopic-qbittorrent-config-storage # Must be unique
     volumeAttributes:
       bucketName: mopic-config
   claimRef: # To ensure no other PVCs can claim this PV
     namespace: default # Namespace is required even though it's in "default" namespace.
     name: mopic-qbittorrent-config-storage-claim
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mopic-jellyfin-config-storage
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ''
+  mountOptions:
+    - allow-delete
+    - allow-overwrite
+    - allow-root
+    - prefix /mopic/config/jellyfin/
+  csi:
+    driver: s3.csi.aws.com # required
+    volumeHandle: mopic-jellyfin-config-storage # Must be unique
+    volumeAttributes:
+      bucketName: mopic-config
+  claimRef: # To ensure no other PVCs can claim this PV
+    namespace: default # Namespace is required even though it's in "default" namespace.
+    name: mopic-jellyfin-config-storage-claim

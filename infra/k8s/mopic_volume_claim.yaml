@@ -8,7 +8,7 @@ spec:
   storageClassName: '' # Required for static provisioning
   resources:
     requests:
-      storage: 120Gi # Ignored, required
+      storage: 1Gi # Ignored, required
   volumeName: mopic-radarr-data-storage
 
 ---
@@ -22,7 +22,7 @@ spec:
   storageClassName: '' # Required for static provisioning
   resources:
     requests:
-      storage: 120Gi # Ignored, required
+      storage: 1Gi # Ignored, required
   volumeName: mopic-jellyfin-data-storage
 
 ---
@@ -36,7 +36,7 @@ spec:
   storageClassName: '' # Required for static provisioning
   resources:
     requests:
-      storage: 120Gi # Ignored, required
+      storage: 1Gi # Ignored, required
   volumeName: mopic-qbittorrent-data-storage
 
 ---
@@ -80,3 +80,17 @@ spec:
     requests:
       storage: 1Gi # Ignored, required
   volumeName: mopic-qbittorrent-config-storage
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mopic-jellyfin-config-storage-claim
+spec:
+  accessModes:
+    - ReadWriteMany # Supported options: ReadWriteMany / ReadOnlyMany
+  storageClassName: '' # Required for static provisioning
+  resources:
+    requests:
+      storage: 1Gi # Ignored, required
+  volumeName: mopic-jellyfin-config-storage

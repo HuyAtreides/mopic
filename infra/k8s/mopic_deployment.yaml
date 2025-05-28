@@ -61,8 +61,8 @@ spec:
           volumeMounts:
             - mountPath: /data
               name: mopic-jellyfin-data-storage
-            # - mountPath: /config
-            #   name: mopic-config-storage
+            - mountPath: /config
+              name: mopic-jellyfin-config-storage
       volumes:
         - name: mopic-radarr-data-storage
           persistentVolumeClaim:
@@ -82,3 +82,6 @@ spec:
         - name: mopic-qbittorrent-config-storage
           persistentVolumeClaim:
             claimName: mopic-qbittorrent-config-storage-claim
+        - name: mopic-jellyfin-config-storage
+          persistentVolumeClaim:
+            claimName: mopic-jellyfin-config-storage-claim

@@ -42,3 +42,9 @@ resource "aws_s3_object" "mopic_config_qbittorrent" {
   key     = "/mopic/config/qbittorrent/"
   content = ""
 }
+
+resource "aws_s3_object" "mopic_config_jellyfin" {
+  bucket  = aws_s3_bucket.mopic_config.id
+  key     = "/mopic/config/jellyfin/"
+  content = ""
+}
