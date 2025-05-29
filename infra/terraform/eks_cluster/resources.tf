@@ -182,7 +182,8 @@ resource "aws_iam_policy" "mopic_media_bucket_policy" {
         "Sid" : "MountpointFullBucketAccess",
         "Effect" : "Allow",
         "Action" : [
-          "s3:ListBucket"
+          "s3:ListBucket",
+          "s3:GetBucketLocation"
         ],
         "Resource" : [
           "arn:aws:s3:::${data.aws_s3_bucket.mopic_s3_bucket_data.id}",

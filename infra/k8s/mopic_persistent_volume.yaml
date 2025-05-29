@@ -11,8 +11,12 @@ spec:
   mountOptions:
     - allow-delete
     - allow-overwrite
-    - allow-root
-    - prefix /mopic/data/
+    - uid 1000
+    - gid 1000
+    - dir-mode 777
+    - file-mode 777
+    - allow-other
+    - prefix mopic/data/
   csi:
     driver: s3.csi.aws.com # required
     volumeHandle: mopic-radarr-data-storage # Must be unique
@@ -36,8 +40,12 @@ spec:
   mountOptions:
     - allow-delete
     - allow-overwrite
-    - allow-root
-    - prefix /mopic/data/media/
+    - uid 1000
+    - gid 1000
+    - dir-mode 777
+    - file-mode 777
+    - allow-other
+    - prefix mopic/data/media/
   csi:
     driver: s3.csi.aws.com # required
     volumeHandle: mopic-jellyfin-data-storage # Must be unique
@@ -61,8 +69,12 @@ spec:
   mountOptions:
     - allow-delete
     - allow-overwrite
-    - allow-root
-    - prefix /mopic/data/qbittorrent/
+    - uid 1000
+    - gid 1000
+    - dir-mode 777
+    - file-mode 777
+    - allow-other
+    - prefix mopic/data/qbittorrent/
   csi:
     driver: s3.csi.aws.com # required
     volumeHandle: mopic-qbittorrent-data-storage # Must be unique
@@ -86,8 +98,12 @@ spec:
   mountOptions:
     - allow-delete
     - allow-overwrite
-    - allow-root
-    - prefix /mopic/config/radarr/
+    - uid 1000
+    - gid 1000
+    - dir-mode 777
+    - file-mode 777
+    - allow-other
+    - prefix mopic/config/radarr/
   csi:
     driver: s3.csi.aws.com # required
     volumeHandle: mopic-radarr-config-storage # Must be unique
@@ -111,8 +127,12 @@ spec:
   mountOptions:
     - allow-delete
     - allow-overwrite
-    - allow-root
-    - prefix /mopic/config/prowlarr/
+    - uid 1000
+    - gid 1000
+    - dir-mode 777
+    - file-mode 777
+    - allow-other
+    - prefix mopic/config/prowlarr/
   csi:
     driver: s3.csi.aws.com # required
     volumeHandle: mopic-prowlarr-config-storage # Must be unique
@@ -136,8 +156,12 @@ spec:
   mountOptions:
     - allow-delete
     - allow-overwrite
-    - allow-root
-    - prefix /mopic/config/qbittorrent/
+    - uid 1000
+    - gid 1000
+    - dir-mode 777
+    - file-mode 777
+    - allow-other
+    - prefix mopic/config/qbittorrent/
   csi:
     driver: s3.csi.aws.com # required
     volumeHandle: mopic-qbittorrent-config-storage # Must be unique
@@ -161,8 +185,12 @@ spec:
   mountOptions:
     - allow-delete
     - allow-overwrite
-    - allow-root
-    - prefix /mopic/config/jellyfin/
+    - uid 1000
+    - gid 1000
+    - dir-mode 777
+    - file-mode 777
+    - allow-other
+    - prefix mopic/config/jellyfin/
   csi:
     driver: s3.csi.aws.com # required
     volumeHandle: mopic-jellyfin-config-storage # Must be unique
