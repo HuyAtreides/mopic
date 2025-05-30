@@ -1,57 +1,14 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mopic-radarr-data-storage-claim
-spec:
-  accessModes:
-    - ReadWriteMany # Supported options: ReadWriteMany / ReadOnlyMany
-  storageClassName: '' # Required for static provisioning
-  resources:
-    requests:
-      storage: 1Gi # Ignored, required
-  volumeName: mopic-radarr-data-storage
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mopic-jellyfin-data-storage-claim
-spec:
-  accessModes:
-    - ReadWriteMany # Supported options: ReadWriteMany / ReadOnlyMany
-  storageClassName: '' # Required for static provisioning
-  resources:
-    requests:
-      storage: 1Gi # Ignored, required
-  volumeName: mopic-jellyfin-data-storage
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mopic-qbittorrent-data-storage-claim
-spec:
-  accessModes:
-    - ReadWriteMany # Supported options: ReadWriteMany / ReadOnlyMany
-  storageClassName: '' # Required for static provisioning
-  resources:
-    requests:
-      storage: 1Gi # Ignored, required
-  volumeName: mopic-qbittorrent-data-storage
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
   name: mopic-radarr-config-storage-claim
 spec:
+  storageClassName: 'eks-auto' # Empty string must be explicitly set otherwise default StorageClass will be set
   accessModes:
-    - ReadWriteMany # Supported options: ReadWriteMany / ReadOnlyMany
-  storageClassName: '' # Required for static provisioning
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi # Ignored, required
-  volumeName: mopic-radarr-config-storage
+      storage: 1Gi
 
 ---
 apiVersion: v1
@@ -59,13 +16,12 @@ kind: PersistentVolumeClaim
 metadata:
   name: mopic-prowlarr-config-storage-claim
 spec:
+  storageClassName: 'eks-auto' # Empty string must be explicitly set otherwise default StorageClass will be set
   accessModes:
-    - ReadWriteMany # Supported options: ReadWriteMany / ReadOnlyMany
-  storageClassName: '' # Required for static provisioning
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi # Ignored, required
-  volumeName: mopic-prowlarr-config-storage
+      storage: 1Gi
 
 ---
 apiVersion: v1
@@ -73,13 +29,12 @@ kind: PersistentVolumeClaim
 metadata:
   name: mopic-qbittorrent-config-storage-claim
 spec:
+  storageClassName: 'eks-auto' # Empty string must be explicitly set otherwise default StorageClass will be set
   accessModes:
-    - ReadWriteMany # Supported options: ReadWriteMany / ReadOnlyMany
-  storageClassName: '' # Required for static provisioning
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi # Ignored, required
-  volumeName: mopic-qbittorrent-config-storage
+      storage: 1Gi
 
 ---
 apiVersion: v1
@@ -87,10 +42,22 @@ kind: PersistentVolumeClaim
 metadata:
   name: mopic-jellyfin-config-storage-claim
 spec:
+  storageClassName: 'eks-auto' # Empty string must be explicitly set otherwise default StorageClass will be set
   accessModes:
-    - ReadWriteMany # Supported options: ReadWriteMany / ReadOnlyMany
-  storageClassName: '' # Required for static provisioning
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi # Ignored, required
-  volumeName: mopic-jellyfin-config-storage
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mopic-data-storage-claim
+spec:
+  storageClassName: 'eks-auto' # Empty string must be explicitly set otherwise default StorageClass will be set
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Gi

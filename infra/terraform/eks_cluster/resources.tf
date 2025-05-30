@@ -38,9 +38,6 @@ resource "aws_eks_cluster" "mopic_k8s" {
     subnet_ids = data.aws_subnets.default_subnets.ids
   }
 
-  # Ensure that IAM Role permissions are created before and deleted
-  # after EKS Cluster handling. Otherwise, EKS will not be able to
-  # properly delete EKS managed EC2 infrastructure such as Security Groups.
   depends_on = [
     aws_iam_role_policy_attachment.mopic_k8s_cluster_AmazonEKSClusterPolicy,
     aws_iam_role_policy_attachment.mopic_k8s_cluster_AmazonEKSComputePolicy,
@@ -60,10 +57,10 @@ resource "aws_eks_addon" "kube_proxy" {
   addon_name   = "kube-proxy"
 }
 
-resource "aws_eks_addon" "coredns" {
-  cluster_name = aws_eks_cluster.mopic_k8s.name
-  addon_name   = "coredns"
-}
+# resource "aws_eks_addon" "coredns" {
+#   cluster_name = aws_eks_cluster.mopic_k8s.name
+#   addon_name   = "coredns"
+# }
 
 
 resource "aws_iam_role" "mopic_k8s_node" {
@@ -143,7 +140,7 @@ resource "aws_iam_role_policy_attachment" "mopic_k8s_cluster_AmazonEKSNetworking
   role       = aws_iam_role.mopic_k8s_cluster.name
 }
 
-// S3 Role Resource
+// EBS Role Resource
 
 resource "aws_iam_role" "mopic_media_manager" {
   name = "mopic_media_manager"
@@ -159,7 +156,7 @@ resource "aws_iam_role" "mopic_media_manager" {
         "Action" : "sts:AssumeRoleWithWebIdentity",
         "Condition" : {
           "StringEquals" : {
-            "${replace(aws_eks_cluster.mopic_k8s.identity[0].oidc[0].issuer, "https://", "")}:sub" = "system:serviceaccount:kube-system:s3-csi-driver-sa",
+            "${replace(aws_eks_cluster.mopic_k8s.identity[0].oidc[0].issuer, "https://", "")}:sub" = "system:serviceaccount:kube-system:ebs-csi-controller-sa",
             "${replace(aws_eks_cluster.mopic_k8s.identity[0].oidc[0].issuer, "https://", "")}:aud" = "sts.amazonaws.com"
           }
         }
@@ -172,52 +169,16 @@ resource "aws_iam_role" "mopic_media_manager" {
   ]
 }
 
-resource "aws_iam_policy" "mopic_media_bucket_policy" {
-  name = "mopic_media_bucket_policy"
-
-  policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
-      {
-        "Sid" : "MountpointFullBucketAccess",
-        "Effect" : "Allow",
-        "Action" : [
-          "s3:ListBucket",
-          "s3:GetBucketLocation"
-        ],
-        "Resource" : [
-          "arn:aws:s3:::${data.aws_s3_bucket.mopic_s3_bucket_data.id}",
-          "arn:aws:s3:::${data.aws_s3_bucket.mopic_s3_bucket_config.id}"
-        ]
-      },
-      {
-        "Sid" : "MountpointFullObjectAccess",
-        "Effect" : "Allow",
-        "Action" : [
-          "s3:GetObject",
-          "s3:PutObject",
-          "s3:AbortMultipartUpload",
-          "s3:DeleteObject"
-        ],
-        "Resource" : [
-          "arn:aws:s3:::${data.aws_s3_bucket.mopic_s3_bucket_data.id}/*",
-          "arn:aws:s3:::${data.aws_s3_bucket.mopic_s3_bucket_config.id}/*"
-        ]
-      }
-    ]
-  })
-}
-
 resource "aws_iam_role_policy_attachment" "mopic_media_manager_role_attach" {
   role       = aws_iam_role.mopic_media_manager.name
-  policy_arn = aws_iam_policy.mopic_media_bucket_policy.arn
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
 }
 
-resource "aws_eks_addon" "mopic_k8s_s3_csi_driver" {
-  cluster_name             = aws_eks_cluster.mopic_k8s.name
-  addon_name               = "aws-mountpoint-s3-csi-driver"
-  service_account_role_arn = aws_iam_role.mopic_media_manager.arn
-}
+# resource "aws_eks_addon" "mopic_k8s_ebs_csi_driver" {
+#   cluster_name             = aws_eks_cluster.mopic_k8s.name
+#   addon_name               = "aws-ebs-csi-driver"
+#   service_account_role_arn = aws_iam_role.mopic_media_manager.arn
+# }
 
 resource "kubernetes_config_map" "aws_auth" {
   metadata {

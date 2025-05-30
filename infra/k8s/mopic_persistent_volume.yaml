@@ -1,117 +1,16 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mopic-radarr-data-storage
-spec:
-  capacity:
-    storage: 120Gi
-  accessModes:
-    - ReadWriteMany
-  storageClassName: ''
-  mountOptions:
-    - allow-delete
-    - allow-overwrite
-    - uid 1000
-    - gid 1000
-    - dir-mode 777
-    - file-mode 777
-    - allow-other
-    - prefix mopic/data/
-  csi:
-    driver: s3.csi.aws.com # required
-    volumeHandle: mopic-radarr-data-storage # Must be unique
-    volumeAttributes:
-      bucketName: mopic-data
-  claimRef: # To ensure no other PVCs can claim this PV
-    namespace: default # Namespace is required even though it's in "default" namespace.
-    name: mopic-radarr-data-storage-claim
-
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: mopic-jellyfin-data-storage
-spec:
-  capacity:
-    storage: 120Gi
-  accessModes:
-    - ReadWriteMany
-  storageClassName: ''
-  mountOptions:
-    - allow-delete
-    - allow-overwrite
-    - uid 1000
-    - gid 1000
-    - dir-mode 777
-    - file-mode 777
-    - allow-other
-    - prefix mopic/data/media/
-  csi:
-    driver: s3.csi.aws.com # required
-    volumeHandle: mopic-jellyfin-data-storage # Must be unique
-    volumeAttributes:
-      bucketName: mopic-data
-  claimRef: # To ensure no other PVCs can claim this PV
-    namespace: default # Namespace is required even though it's in "default" namespace.
-    name: mopic-jellyfin-data-storage-claim
-
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: mopic-qbittorrent-data-storage
-spec:
-  capacity:
-    storage: 120Gi
-  accessModes:
-    - ReadWriteMany
-  storageClassName: ''
-  mountOptions:
-    - allow-delete
-    - allow-overwrite
-    - uid 1000
-    - gid 1000
-    - dir-mode 777
-    - file-mode 777
-    - allow-other
-    - prefix mopic/data/qbittorrent/
-  csi:
-    driver: s3.csi.aws.com # required
-    volumeHandle: mopic-qbittorrent-data-storage # Must be unique
-    volumeAttributes:
-      bucketName: mopic-data
-  claimRef: # To ensure no other PVCs can claim this PV
-    namespace: default # Namespace is required even though it's in "default" namespace.
-    name: mopic-qbittorrent-data-storage-claim
-
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
   name: mopic-radarr-config-storage
 spec:
+  accessModes:
+    - ReadWriteOnce
   capacity:
     storage: 1Gi
-  accessModes:
-    - ReadWriteMany
-  storageClassName: ''
-  mountOptions:
-    - allow-delete
-    - allow-overwrite
-    - uid 1000
-    - gid 1000
-    - dir-mode 777
-    - file-mode 777
-    - allow-other
-    - prefix mopic/config/radarr/
   csi:
-    driver: s3.csi.aws.com # required
-    volumeHandle: mopic-radarr-config-storage # Must be unique
-    volumeAttributes:
-      bucketName: mopic-config
-  claimRef: # To ensure no other PVCs can claim this PV
-    namespace: default # Namespace is required even though it's in "default" namespace.
-    name: mopic-radarr-config-storage-claim
+    driver: ebs.csi.eks.amazonaws.com
+    fsType: ext4
+    volumeHandle: vol-03c604538dd7d2f41
 
 ---
 apiVersion: v1
@@ -119,28 +18,14 @@ kind: PersistentVolume
 metadata:
   name: mopic-prowlarr-config-storage
 spec:
+  accessModes:
+    - ReadWriteOnce
   capacity:
     storage: 1Gi
-  accessModes:
-    - ReadWriteMany
-  storageClassName: ''
-  mountOptions:
-    - allow-delete
-    - allow-overwrite
-    - uid 1000
-    - gid 1000
-    - dir-mode 777
-    - file-mode 777
-    - allow-other
-    - prefix mopic/config/prowlarr/
   csi:
-    driver: s3.csi.aws.com # required
-    volumeHandle: mopic-prowlarr-config-storage # Must be unique
-    volumeAttributes:
-      bucketName: mopic-config
-  claimRef: # To ensure no other PVCs can claim this PV
-    namespace: default # Namespace is required even though it's in "default" namespace.
-    name: mopic-prowlarr-config-storage-claim
+    driver: ebs.csi.eks.amazonaws.com
+    fsType: ext4
+    volumeHandle: vol-03c604538dd7d2f42
 
 ---
 apiVersion: v1
@@ -148,28 +33,14 @@ kind: PersistentVolume
 metadata:
   name: mopic-qbittorrent-config-storage
 spec:
+  accessModes:
+    - ReadWriteOnce
   capacity:
     storage: 1Gi
-  accessModes:
-    - ReadWriteMany
-  storageClassName: ''
-  mountOptions:
-    - allow-delete
-    - allow-overwrite
-    - uid 1000
-    - gid 1000
-    - dir-mode 777
-    - file-mode 777
-    - allow-other
-    - prefix mopic/config/qbittorrent/
   csi:
-    driver: s3.csi.aws.com # required
-    volumeHandle: mopic-qbittorrent-config-storage # Must be unique
-    volumeAttributes:
-      bucketName: mopic-config
-  claimRef: # To ensure no other PVCs can claim this PV
-    namespace: default # Namespace is required even though it's in "default" namespace.
-    name: mopic-qbittorrent-config-storage-claim
+    driver: ebs.csi.eks.amazonaws.com
+    fsType: ext4
+    volumeHandle: vol-03c604538dd7d2f43
 
 ---
 apiVersion: v1
@@ -177,25 +48,26 @@ kind: PersistentVolume
 metadata:
   name: mopic-jellyfin-config-storage
 spec:
-  capacity:
-    storage: 1Gi
   accessModes:
-    - ReadWriteMany
-  storageClassName: ''
-  mountOptions:
-    - allow-delete
-    - allow-overwrite
-    - uid 1000
-    - gid 1000
-    - dir-mode 777
-    - file-mode 777
-    - allow-other
-    - prefix mopic/config/jellyfin/
+    - ReadWriteOnce
+  capacity:
+    storage: 5Gi
   csi:
-    driver: s3.csi.aws.com # required
-    volumeHandle: mopic-jellyfin-config-storage # Must be unique
-    volumeAttributes:
-      bucketName: mopic-config
-  claimRef: # To ensure no other PVCs can claim this PV
-    namespace: default # Namespace is required even though it's in "default" namespace.
-    name: mopic-jellyfin-config-storage-claim
+    driver: ebs.csi.eks.amazonaws.com
+    fsType: ext4
+    volumeHandle: vol-03c604538dd7d2f44
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mopic-data-storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 500Gi
+  csi:
+    driver: ebs.csi.eks.amazonaws.com
+    fsType: ext4
+    volumeHandle: vol-03c604538dd7d2f45

@@ -12,6 +12,13 @@ spec:
       labels:
         app: mopic
     spec:
+      initContainers:
+        - name: chmod-data
+          image: busybox
+          command: ['sh', '-c', 'chown 1000:1000 /data && chmod 775 /data']
+          volumeMounts:
+            - name: mopic-data-storage
+              mountPath: /data
       containers:
         - name: radarr
           image: lscr.io/linuxserver/radarr:latest
@@ -28,7 +35,7 @@ spec:
               value: Etc/UTC
           volumeMounts:
             - mountPath: /data
-              name: mopic-radarr-data-storage
+              name: mopic-data-storage
             - mountPath: /config
               name: mopic-radarr-config-storage
         - name: prowlarr
@@ -66,7 +73,7 @@ spec:
               value: '6881'
           volumeMounts:
             - mountPath: /data
-              name: mopic-qbittorrent-data-storage
+              name: mopic-data-storage
             - mountPath: /config
               name: mopic-qbittorrent-config-storage
         - name: jellyfin
@@ -78,19 +85,13 @@ spec:
               value: Etc/UTC
           volumeMounts:
             - mountPath: /data
-              name: mopic-jellyfin-data-storage
+              name: mopic-data-storage
             - mountPath: /config
               name: mopic-jellyfin-config-storage
       volumes:
-        - name: mopic-radarr-data-storage
+        - name: mopic-data-storage
           persistentVolumeClaim:
-            claimName: mopic-radarr-data-storage-claim
-        - name: mopic-jellyfin-data-storage
-          persistentVolumeClaim:
-            claimName: mopic-jellyfin-data-storage-claim
-        - name: mopic-qbittorrent-data-storage
-          persistentVolumeClaim:
-            claimName: mopic-qbittorrent-data-storage-claim
+            claimName: mopic-data-storage-claim
         - name: mopic-radarr-config-storage
           persistentVolumeClaim:
             claimName: mopic-radarr-config-storage-claim

@@ -20,11 +20,3 @@ data "aws_eks_cluster_auth" "mopic_k8s" {
   name = data.aws_eks_cluster.mopic_k8s.name
 }
 
-data "aws_s3_bucket" "mopic_s3_bucket_data" {
-  bucket = "mopic-data"
-}
-
-data "aws_s3_bucket" "mopic_s3_bucket_config" {
-  bucket = "mopic-config"
-}
-
