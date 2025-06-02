@@ -1,0 +1,58 @@
+
+Interrupt received.
+Please wait for Terraform to exit or data loss may occur.
+Gracefully shutting down...
+
+
+Two interrupts received. Exiting immediately. Note that data loss may have
+occurred.
+
+[0m[1mdata.aws_subnets.default_subnets: Reading...[0m[0m
+[0m[1maws_iam_role.mopic_k8s_node: Refreshing state... [id=mopic_k8s_node][0m
+[0m[1mdata.aws_caller_identity.current: Reading...[0m[0m
+[0m[1maws_iam_role.mopic_k8s_cluster: Refreshing state... [id=mopic_k8s_cluster][0m
+[0m[1mdata.aws_caller_identity.current: Read complete after 0s [id=031645893440][0m
+[0m[1mdata.aws_subnets.default_subnets: Read complete after 1s [id=eu-north-1][0m
+[0m[1maws_iam_role_policy_attachment.mopic_k8s_cluster_AmazonEKSClusterPolicy: Refreshing state... [id=mopic_k8s_cluster-20250602034432708600000002][0m
+[0m[1maws_iam_role_policy_attachment.mopic_k8s_cluster_AmazonEKSComputePolicy: Refreshing state... [id=mopic_k8s_cluster-20250602034432692600000001][0m
+[0m[1maws_iam_role_policy_attachment.mopic_k8s_cluster_AmazonEKSLoadBalancingPolicy: Refreshing state... [id=mopic_k8s_cluster-20250602034433356500000005][0m
+[0m[1maws_iam_role_policy_attachment.mopic_k8s_cluster_AmazonEKSNetworkingPolicy: Refreshing state... [id=mopic_k8s_cluster-20250602034433038400000004][0m
+[0m[1maws_iam_role_policy_attachment.mopic_k8s_cluster_AmazonEKSBlockStoragePolicy: Refreshing state... [id=mopic_k8s_cluster-20250602034433019400000003][0m
+[0m[1maws_iam_role_policy_attachment.mopic_k8s_node_AmazonEKSWorkerNodeMinimalPolicy: Refreshing state... [id=mopic_k8s_node-20250602034433595700000007][0m
+[0m[1maws_iam_role_policy_attachment.mopic_k8s_node_AmazonEC2ContainerRegistryPullOnly: Refreshing state... [id=mopic_k8s_node-20250602034433371600000006][0m
+[0m[1maws_eks_cluster.mopic_k8s: Refreshing state... [id=mopic_k8s][0m
+[0m[1maws_eks_addon.kube_proxy: Refreshing state... [id=mopic_k8s:kube-proxy][0m
+[0m[1maws_iam_openid_connect_provider.eks: Refreshing state... [id=arn:aws:iam::031645893440:oidc-provider/oidc.eks.eu-north-1.amazonaws.com/id/C397547F0EAEA8D9245346438E8DD814][0m
+[0m[1mdata.aws_eks_cluster.mopic_k8s: Reading...[0m[0m
+[0m[1maws_iam_role.mopic_media_manager: Refreshing state... [id=mopic_media_manager][0m
+[0m[1mdata.aws_eks_cluster.mopic_k8s: Read complete after 0s [id=mopic_k8s][0m
+[0m[1mdata.aws_eks_cluster_auth.mopic_k8s: Reading...[0m[0m
+[0m[1mdata.aws_eks_cluster_auth.mopic_k8s: Read complete after 0s [id=mopic_k8s][0m
+[0m[1mkubernetes_config_map.aws_auth: Refreshing state... [id=kube-system/aws-auth][0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1moperation canceled[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mPlugin did not respond[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  with aws_iam_role.mopic_media_manager,
+[31m│[0m [0m  on resources.tf line 145, in resource "aws_iam_role" "mopic_media_manager":
+[31m│[0m [0m 145: resource "aws_iam_role" "mopic_media_manager" [4m{[0m[0m
+[31m│[0m [0m
+[31m│[0m [0mThe plugin encountered an error, and failed to respond to the
+[31m│[0m [0mplugin.(*GRPCProvider).ReadResource call. The plugin logs may contain more
+[31m│[0m [0mdetails.
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mPlugin did not respond[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  with kubernetes_config_map.aws_auth,
+[31m│[0m [0m  on resources.tf line 183, in resource "kubernetes_config_map" "aws_auth":
+[31m│[0m [0m 183: resource "kubernetes_config_map" "aws_auth" [4m{[0m[0m
+[31m│[0m [0m
+[31m│[0m [0mThe plugin encountered an error, and failed to respond to the
+[31m│[0m [0mplugin.(*GRPCProvider).ReadResource call. The plugin logs may contain more
+[31m│[0m [0mdetails.
+[31m╵[0m[0m
