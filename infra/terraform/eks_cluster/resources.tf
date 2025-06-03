@@ -57,10 +57,10 @@ resource "aws_eks_addon" "kube_proxy" {
   addon_name   = "kube-proxy"
 }
 
-# resource "aws_eks_addon" "coredns" {
-#   cluster_name = aws_eks_cluster.mopic_k8s.name
-#   addon_name   = "coredns"
-# }
+resource "aws_eks_addon" "coredns" {
+  cluster_name = aws_eks_cluster.mopic_k8s.name
+  addon_name   = "coredns"
+}
 
 
 resource "aws_iam_role" "mopic_k8s_node" {
@@ -196,3 +196,39 @@ resource "kubernetes_config_map" "aws_auth" {
     ])
   }
 }
+
+resource "aws_iam_policy" "mopic_alb_controller" {
+  name        = "AWSLoadBalancerControllerIAMPolicy"
+  path        = "./"
+  description = "IAM policy for AWS Load Balancer Controller"
+  policy      = file("load_balancer_controller_policy.json")
+}
+
+resource "aws_iam_role" "mopic_alb_controller" {
+  name = "eks-alb-controller-role"
+
+  assume_role_policy = jsonencode({
+    "Version" = "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Principal" : {
+          "Federated" : "${aws_iam_openid_connect_provider.eks.arn}",
+        },
+        "Action" : "sts:AssumeRoleWithWebIdentity",
+        "Condition" : {
+          "StringEquals" : {
+            "${replace(aws_eks_cluster.mopic_k8s.identity[0].oidc[0].issuer, "https://", "")}:sub" = "system:serviceaccount:kube-system:aws-load-balancer-controller",
+            "${replace(aws_eks_cluster.mopic_k8s.identity[0].oidc[0].issuer, "https://", "")}:aud" = "sts.amazonaws.com"
+          }
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "alb_attach" {
+  policy_arn = aws_iam_policy.mopic_alb_controller.arn
+  role       = aws_iam_role.mopic_alb_controller.name
+}
+
