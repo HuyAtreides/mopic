@@ -5,12 +5,16 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: 'eks-auto'
+  claimRef:
+    namespace: default
+    name: mopic-radarr-config-storage-claim
   capacity:
     storage: 1Gi
   csi:
     driver: ebs.csi.eks.amazonaws.com
     fsType: ext4
-    volumeHandle: vol-03c604538dd7d2f41
+    volumeHandle: vol-0e0200b81b8313e3f
 
 ---
 apiVersion: v1
@@ -20,12 +24,16 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: 'eks-auto'
+  claimRef:
+    namespace: default
+    name: mopic-prowlarr-config-storage-claim
   capacity:
     storage: 1Gi
   csi:
     driver: ebs.csi.eks.amazonaws.com
     fsType: ext4
-    volumeHandle: vol-03c604538dd7d2f42
+    volumeHandle: vol-068f78a5d4af0d028
 
 ---
 apiVersion: v1
@@ -35,12 +43,16 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  claimRef:
+    namespace: default
+    name: mopic-qbittorrent-config-storage-claim
+  storageClassName: 'eks-auto'
   capacity:
     storage: 1Gi
   csi:
     driver: ebs.csi.eks.amazonaws.com
     fsType: ext4
-    volumeHandle: vol-03c604538dd7d2f43
+    volumeHandle: vol-05ededce02e40b02c
 
 ---
 apiVersion: v1
@@ -50,12 +62,16 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  claimRef:
+    namespace: default
+    name: mopic-jellyfin-config-storage-claim
+  storageClassName: 'eks-auto'
   capacity:
     storage: 1Gi
   csi:
     driver: ebs.csi.eks.amazonaws.com
     fsType: ext4
-    volumeHandle: vol-03c604538dd7d2f44
+    volumeHandle: vol-0bb57b53a1d501557
 
 ---
 apiVersion: v1
@@ -65,9 +81,13 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: 'eks-auto'
+  claimRef:
+    namespace: default
+    name: mopic-data-storage-claim
   capacity:
     storage: 500Gi
   csi:
     driver: ebs.csi.eks.amazonaws.com
     fsType: ext4
-    volumeHandle: vol-03c604538dd7d2f45
+    volumeHandle: vol-0ea419c9bb5e71bbd
