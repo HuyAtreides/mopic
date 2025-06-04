@@ -199,7 +199,7 @@ resource "kubernetes_config_map" "aws_auth" {
 
 resource "aws_iam_policy" "mopic_alb_controller" {
   name        = "AWSLoadBalancerControllerIAMPolicy"
-  path        = "./"
+  path        = "/"
   description = "IAM policy for AWS Load Balancer Controller"
   policy      = file("load_balancer_controller_policy.json")
 }
@@ -232,3 +232,46 @@ resource "aws_iam_role_policy_attachment" "alb_attach" {
   role       = aws_iam_role.mopic_alb_controller.name
 }
 
+resource "kubernetes_service_account" "aws_lb_controller" {
+  metadata {
+    name      = "aws-load-balancer-controller"
+    namespace = "kube-system"
+    annotations = {
+      "eks.amazonaws.com/role-arn" = aws_iam_role.mopic_alb_controller.name
+    }
+  }
+}
+
+
+resource "helm_release" "alb_controller" {
+  name       = "aws-load-balancer-controller"
+  namespace  = "kube-system"
+  repository = "https://aws.github.io/eks-charts"
+  chart      = "aws-load-balancer-controller"
+  version    = "1.13.0"
+
+  set {
+    name  = "clusterName"
+    value = aws_eks_cluster.mopic_k8s.name
+  }
+
+  set {
+    name  = "region"
+    value = var.aws_default_region
+  }
+
+  set {
+    name  = "vpcId"
+    value = var.default_vpc_id
+  }
+
+  set {
+    name  = "serviceAccount.create"
+    value = "false"
+  }
+
+  set {
+    name  = "serviceAccount.name"
+    value = "aws-load-balancer-controller"
+  }
+}
