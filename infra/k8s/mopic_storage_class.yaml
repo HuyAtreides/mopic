@@ -5,8 +5,8 @@ metadata:
   annotations:
     storageclass.kubernetes.io/is-default-class: 'true'
 provisioner: ebs.csi.eks.amazonaws.com
-volumeBindingMode: Immediate
-reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Delete
 parameters:
   type: gp3
   encrypted: 'true'

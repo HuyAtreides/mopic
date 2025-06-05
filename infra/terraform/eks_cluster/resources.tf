@@ -47,6 +47,30 @@ resource "aws_eks_cluster" "mopic_k8s" {
   ]
 }
 
+resource "aws_ec2_tag" "default_public_subnet_tags" {
+  for_each = toset(data.aws_subnets.default_subnets.ids)
+
+  resource_id = each.value
+  key         = "kubernetes.io/role/elb"
+  value       = "1"
+}
+
+resource "aws_ec2_tag" "default_private_subnet_tags" {
+  for_each = toset(data.aws_subnets.default_subnets.ids)
+
+  resource_id = each.value
+  key         = "kubernetes.io/role/internal-elb"
+  value       = "1"
+}
+
+resource "aws_ec2_tag" "default_subnet_common_tags" {
+  for_each = toset(data.aws_subnets.default_subnets.ids)
+
+  resource_id = each.value
+  key         = "kubernetes.io/cluster/${aws_eks_cluster.mopic_k8s.name}"
+  value       = "shared"
+}
+
 # resource "aws_eks_addon" "vpc_cni" {
 #   cluster_name = aws_eks_cluster.mopic_k8s.name
 #   addon_name   = "vpc-cni"
@@ -237,7 +261,7 @@ resource "kubernetes_service_account" "aws_lb_controller" {
     name      = "aws-load-balancer-controller"
     namespace = "kube-system"
     annotations = {
-      "eks.amazonaws.com/role-arn" = aws_iam_role.mopic_alb_controller.name
+      "eks.amazonaws.com/role-arn" = aws_iam_role.mopic_alb_controller.arn
     }
   }
 }
