@@ -8,5 +8,6 @@ provisioner: ebs.csi.eks.amazonaws.com
 volumeBindingMode: WaitForFirstConsumer
 reclaimPolicy: Delete
 parameters:
-  type: gp3
-  encrypted: 'true'
+  type: io2
+  iops: '6000'
+  fsType: ext4
