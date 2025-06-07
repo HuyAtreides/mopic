@@ -1,0 +1,16 @@
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: my-node-pool
+spec:
+  template:
+    spec:
+      nodeClassRef:
+        group: eks.amazonaws.com
+        kind: NodeClass
+        name: default
+
+      requirements:
+        - key: 'eks.amazonaws.com/instance-type'
+          operator: In
+          values: ['c5a.2xlarge']

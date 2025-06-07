@@ -1,7 +1,7 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: eks-auto
+  name: media-storage-class
   annotations:
     storageclass.kubernetes.io/is-default-class: 'true'
 provisioner: ebs.csi.eks.amazonaws.com
@@ -9,5 +9,4 @@ volumeBindingMode: WaitForFirstConsumer
 reclaimPolicy: Delete
 parameters:
   type: io2
-  iops: '6000'
-  fsType: ext4
+  iops: '64000'

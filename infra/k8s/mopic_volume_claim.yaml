@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mopic-radarr-config-storage-claim
 spec:
-  storageClassName: 'eks-auto' # Empty string must be explicitly set otherwise default StorageClass will be set
+  storageClassName: 'config-storage-class' # Empty string must be explicitly set otherwise default StorageClass will be set
   accessModes:
     - ReadWriteOnce
   resources:
@@ -16,7 +16,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mopic-prowlarr-config-storage-claim
 spec:
-  storageClassName: 'eks-auto' # Empty string must be explicitly set otherwise default StorageClass will be set
+  storageClassName: 'config-storage-class' # Empty string must be explicitly set otherwise default StorageClass will be set
   accessModes:
     - ReadWriteOnce
   resources:
@@ -29,7 +29,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mopic-qbittorrent-config-storage-claim
 spec:
-  storageClassName: 'eks-auto' # Empty string must be explicitly set otherwise default StorageClass will be set
+  storageClassName: 'config-storage-class' # Empty string must be explicitly set otherwise default StorageClass will be set
   accessModes:
     - ReadWriteOnce
   resources:
@@ -42,7 +42,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mopic-jellyfin-config-storage-claim
 spec:
-  storageClassName: 'eks-auto' # Empty string must be explicitly set otherwise default StorageClass will be set
+  storageClassName: 'config-storage-class' # Empty string must be explicitly set otherwise default StorageClass will be set
   accessModes:
     - ReadWriteOnce
   resources:
@@ -55,9 +55,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: mopic-data-storage-claim
 spec:
-  storageClassName: 'eks-auto' # Empty string must be explicitly set otherwise default StorageClass will be set
+  storageClassName: 'media-storage-class' # Empty string must be explicitly set otherwise default StorageClass will be set
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 500Gi
+      storage: 700Gi
