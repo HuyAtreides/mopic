@@ -22,6 +22,7 @@ spec:
               chown 1000:1000 /data; \
               chown 1000:1000 /data/media; \
               chown 1000:1000 /data/media/transcoded; \
+              chmod 777 /data/media/transcoded; \
               chown 1000:1000 /data/qbittorrent; \
 
           volumeMounts:
@@ -89,6 +90,10 @@ spec:
           resources:
             requests:
               memory: '8Gi'
+              cpu: '2'
+            limits:
+              memory: '10Gi'
+              cpu: '4'
           ports:
             - containerPort: 8096
           env:
