@@ -84,6 +84,7 @@ resource "aws_eks_addon" "kube_proxy" {
 resource "aws_eks_addon" "coredns" {
   cluster_name = aws_eks_cluster.mopic_k8s.name
   addon_name   = "coredns"
+  depends_on   = [helm_release.alb_controller]
 }
 
 

@@ -30,13 +30,6 @@ spec:
       containers:
         - name: radarr
           image: lscr.io/linuxserver/radarr:latest
-          resources:
-            requests:
-              memory: '250Mi'
-              cpu: '25m'
-            limits:
-              memory: '500Mi'
-              cpu: '25m'
           ports:
             - containerPort: 7878
           env:
@@ -55,13 +48,6 @@ spec:
               name: mopic-radarr-config-storage
         - name: prowlarr
           image: lscr.io/linuxserver/prowlarr:latest
-          resources:
-            requests:
-              memory: '250Mi'
-              cpu: '25m'
-            limits:
-              memory: '500Mi'
-              cpu: '25m'
           ports:
             - containerPort: 9696
           env:
@@ -77,13 +63,6 @@ spec:
             - mountPath: /config
               name: mopic-prowlarr-config-storage
         - name: qbittorrent
-          resources:
-            requests:
-              memory: '500Mi'
-              cpu: '50m'
-            limits:
-              memory: '1Gi'
-              cpu: '50m'
           image: lscr.io/linuxserver/qbittorrent:latest
           ports:
             - containerPort: 5000
@@ -109,11 +88,7 @@ spec:
           image: lscr.io/linuxserver/jellyfin:latest
           resources:
             requests:
-              memory: '4Gi'
-              cpu: '1'
-            limits:
               memory: '8Gi'
-              cpu: '1'
           ports:
             - containerPort: 8096
           env:

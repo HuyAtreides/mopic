@@ -11,3 +11,7 @@ provider "helm" {
     token                  = data.aws_eks_cluster_auth.mopic_k8s.token
   }
 }
+
+provider "aws" {
+  region = var.aws_default_region
+}
