@@ -1,0 +1,53 @@
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshot
+metadata:
+  name: mopic-snapshot-radarr-config
+  namespace: default
+spec:
+  volumeSnapshotClassName: csi-aws-vsc
+  source:
+    volumeSnapshotContentName: mopic-radarr-config-snapshot-content
+
+---
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshot
+metadata:
+  name: mopic-snapshot-prowlarr-config
+  namespace: default
+spec:
+  volumeSnapshotClassName: csi-aws-vsc
+  source:
+    volumeSnapshotContentName: mopic-prowlarr-config-snapshot-content
+
+---
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshot
+metadata:
+  name: mopic-snapshot-qbittorrent-config
+  namespace: default
+spec:
+  volumeSnapshotClassName: csi-aws-vsc
+  source:
+    volumeSnapshotContentName: mopic-qbittorrent-config-snapshot-content
+
+---
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshot
+metadata:
+  name: mopic-snapshot-jellyfin-config
+  namespace: default
+spec:
+  volumeSnapshotClassName: csi-aws-vsc
+  source:
+    volumeSnapshotContentName: mopic-jellyfin-config-snapshot-content
+
+---
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshot
+metadata:
+  name: mopic-snapshot-data
+  namespace: default
+spec:
+  volumeSnapshotClassName: csi-aws-vsc
+  source:
+    volumeSnapshotContentName: mopic-data-snapshot-content
