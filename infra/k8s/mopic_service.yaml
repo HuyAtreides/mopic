@@ -36,11 +36,11 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: mopic-ingress
+  name: mopic-jellyfin-ingress
   annotations:
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/load-balancer-name: mopic-alb
+    alb.ingress.kubernetes.io/load-balancer-name: mopic-jellyfin-alb
   labels:
     app: mopic
 spec:
@@ -55,24 +55,75 @@ spec:
                 name: mopic-service
                 port:
                   name: jellyfin
-          # - pathType: Prefix
-          #   path: '/'
-          #   backend:
-          #     service:
-          #       name: mopic-service
-          #       port:
-          #         name: radarr
-          # - pathType: Prefix
-          #   path: '/'
-          #   backend:
-          #     service:
-          #       name: mopic-service
-          #       port:
-          #         name: radarr
-          # - pathType: Prefix
-          #   path: '/'
-          #   backend:
-          #     service:
-          #       name: mopic-service
-          #       port:
-          #         name: radarr
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mopic-radarr-ingress
+  annotations:
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/load-balancer-name: mopic-radarr-alb
+  labels:
+    app: mopic
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: '/'
+            backend:
+              service:
+                name: mopic-service
+                port:
+                  name: radarr
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mopic-prowlarr-ingress
+  annotations:
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/load-balancer-name: mopic-prowlarr-alb
+  labels:
+    app: mopic
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: '/'
+            backend:
+              service:
+                name: mopic-service
+                port:
+                  name: prowlarr
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mopic-qbittorrent-ingress
+  annotations:
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/load-balancer-name: mopic-qbittorrent-alb
+  labels:
+    app: mopic
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: '/'
+            backend:
+              service:
+                name: mopic-service
+                port:
+                  name: qbittorrent

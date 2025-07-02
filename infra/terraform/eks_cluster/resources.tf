@@ -275,28 +275,27 @@ resource "helm_release" "alb_controller" {
   chart      = "aws-load-balancer-controller"
   version    = "1.13.0"
 
-  set {
+  set = [{
     name  = "clusterName"
     value = aws_eks_cluster.mopic_k8s.name
-  }
+    }
+    , {
+      name  = "region"
+      value = var.aws_default_region
+    }
 
-  set {
-    name  = "region"
-    value = var.aws_default_region
-  }
+    , {
+      name  = "vpcId"
+      value = var.default_vpc_id
+    }
 
-  set {
-    name  = "vpcId"
-    value = var.default_vpc_id
-  }
-
-  set {
-    name  = "serviceAccount.create"
-    value = "false"
-  }
-
-  set {
-    name  = "serviceAccount.name"
-    value = "aws-load-balancer-controller"
-  }
+    , {
+      name  = "serviceAccount.create"
+      value = "false"
+    }
+    , {
+      name  = "serviceAccount.name"
+      value = "aws-load-balancer-controller"
+    }
+  ]
 }

@@ -2,3 +2,4 @@ infra/k8s/config
 infra/k8s/data
 infra/terraform/**/.terraform
 infra/terraform/**/.terraform.*
+.vscode

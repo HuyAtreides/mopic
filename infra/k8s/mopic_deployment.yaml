@@ -80,6 +80,8 @@ spec:
               value: '5000'
             - name: TORRENTING_PORT
               value: '6881'
+            - name: QBT_WEBUI_HOSTHEADER_VALIDATION
+              value: 'false'
           volumeMounts:
             - mountPath: /data
               name: mopic-data-storage
