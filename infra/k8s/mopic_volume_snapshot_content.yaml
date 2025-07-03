@@ -1,15 +1,15 @@
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshotContent
 metadata:
-  name: mopic-radarr-config-static-snapshot-content
+  name: mopic-radarr-config-snapshot-content
 spec:
   volumeSnapshotRef:
     kind: VolumeSnapshot
     name: mopic-snapshot-radarr-config
     namespace: default
   source:
-    snapshotHandle: # TBD
-  driver: ebs.csi.aws.com
+    snapshotHandle: snap-04e2630470b6a7bd9
+  driver: ebs.csi.eks.amazonaws.com
   deletionPolicy: Delete
   volumeSnapshotClassName: csi-aws-vsc
 
@@ -17,15 +17,15 @@ spec:
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshotContent
 metadata:
-  name: mopic-prowlarr-config-static-snapshot-content
+  name: mopic-prowlarr-config-snapshot-content
 spec:
   volumeSnapshotRef:
     kind: VolumeSnapshot
     name: mopic-snapshot-prowlarr-config
     namespace: default
   source:
-    snapshotHandle: # TBD
-  driver: ebs.csi.aws.com
+    snapshotHandle: snap-0b2135483b846ddc0
+  driver: ebs.csi.eks.amazonaws.com
   deletionPolicy: Delete
   volumeSnapshotClassName: csi-aws-vsc
 
@@ -33,45 +33,45 @@ spec:
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshotContent
 metadata:
-  name: mopic-qbittorrent-config-static-snapshot-content
+  name: mopic-qbittorrent-config-snapshot-content
 spec:
   volumeSnapshotRef:
     kind: VolumeSnapshot
     name: mopic-snapshot-qbittorrent-config
     namespace: default
   source:
-    snapshotHandle: # TBD
-  driver: ebs.csi.aws.com
+    snapshotHandle: snap-0d20d95746089068a
+  driver: ebs.csi.eks.amazonaws.com
   deletionPolicy: Delete
   volumeSnapshotClassName: csi-aws-vsc
 ---
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshotContent
 metadata:
-  name: mopic-jellyfin-config-static-snapshot-content
+  name: mopic-jellyfin-config-snapshot-content
 spec:
   volumeSnapshotRef:
     kind: VolumeSnapshot
     name: mopic-snapshot-jellyfin-config
     namespace: default
   source:
-    snapshotHandle: # TBD
-  driver: ebs.csi.aws.com
+    snapshotHandle: snap-02cbb5a7d9b76b581
+  driver: ebs.csi.eks.amazonaws.com
   deletionPolicy: Delete
   volumeSnapshotClassName: csi-aws-vsc
 
 ---
-apiVersion: snapshot.storage.k8s.io/v1
-kind: VolumeSnapshotContent
-metadata:
-  name: mopic-data-static-snapshot-content
-spec:
-  volumeSnapshotRef:
-    kind: VolumeSnapshot
-    name: mopic-snapshot-data
-    namespace: default
-  source:
-    snapshotHandle: # TBD
-  driver: ebs.csi.aws.com
-  deletionPolicy: Delete
-  volumeSnapshotClassName: csi-aws-vsc
+# apiVersion: snapshot.storage.k8s.io/v1
+# kind: VolumeSnapshotContent
+# metadata:
+#   name: mopic-data-snapshot-content
+# spec:
+#   volumeSnapshotRef:
+#     kind: VolumeSnapshot
+#     name: mopic-snapshot-data
+#     namespace: default
+#   source:
+#     snapshotHandle: # TBD
+#   driver: ebs.csi.eks.amazonaws.com
+#   deletionPolicy: Delete
+#   volumeSnapshotClassName: csi-aws-vsc

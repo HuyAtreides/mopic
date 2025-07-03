@@ -42,12 +42,12 @@ spec:
     volumeSnapshotContentName: mopic-jellyfin-config-snapshot-content
 
 ---
-apiVersion: snapshot.storage.k8s.io/v1
-kind: VolumeSnapshot
-metadata:
-  name: mopic-snapshot-data
-  namespace: default
-spec:
-  volumeSnapshotClassName: csi-aws-vsc
-  source:
-    volumeSnapshotContentName: mopic-data-snapshot-content
+# apiVersion: snapshot.storage.k8s.io/v1
+# kind: VolumeSnapshot
+# metadata:
+#   name: mopic-snapshot-data
+#   namespace: default
+# spec:
+#   volumeSnapshotClassName: csi-aws-vsc
+#   source:
+#     volumeSnapshotContentName: mopic-data-snapshot-content

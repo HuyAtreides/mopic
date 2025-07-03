@@ -89,13 +89,13 @@ spec:
               name: mopic-qbittorrent-config-storage
         - name: jellyfin
           image: lscr.io/linuxserver/jellyfin:latest
-          resources:
-            requests:
-              memory: '8Gi'
-              cpu: '2'
-            limits:
-              memory: '10Gi'
-              cpu: '4'
+          # resources:
+          #   requests:
+          #     memory: '8Gi'
+          #     cpu: '2'
+          #   limits:
+          #     memory: '10Gi'
+          #     cpu: '4'
           ports:
             - containerPort: 8096
           env:

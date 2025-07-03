@@ -9,6 +9,10 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  dataSource:
+    name: mopic-snapshot-radarr-config
+    kind: VolumeSnapshot
+    apiGroup: snapshot.storage.k8s.io
 
 ---
 apiVersion: v1
@@ -22,6 +26,10 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  dataSource:
+    name: mopic-snapshot-prowlarr-config
+    kind: VolumeSnapshot
+    apiGroup: snapshot.storage.k8s.io
 
 ---
 apiVersion: v1
@@ -35,6 +43,10 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  dataSource:
+    name: mopic-snapshot-qbittorrent-config
+    kind: VolumeSnapshot
+    apiGroup: snapshot.storage.k8s.io
 
 ---
 apiVersion: v1
@@ -48,6 +60,10 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  dataSource:
+    name: mopic-snapshot-jellyfin-config
+    kind: VolumeSnapshot
+    apiGroup: snapshot.storage.k8s.io
 
 ---
 apiVersion: v1
