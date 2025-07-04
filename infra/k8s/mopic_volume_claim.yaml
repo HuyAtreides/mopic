@@ -59,7 +59,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 2Gi
   dataSource:
     name: mopic-snapshot-jellyfin-config
     kind: VolumeSnapshot
@@ -76,4 +76,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 100Gi
+      storage: 200Gi
