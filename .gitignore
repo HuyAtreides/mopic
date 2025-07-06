@@ -3,3 +3,5 @@ infra/k8s/data
 infra/terraform/**/.terraform
 infra/terraform/**/.terraform.*
 .vscode
+*.tfvars
+**/**/terraform.tfstate.backup
