@@ -11,11 +11,3 @@ resource "digitalocean_kubernetes_cluster" "mopic-k8s" {
     max_nodes  = 3
   }
 }
-
-resource "digitalocean_volume" "mopic-volume" {
-  region                  = "sgp1"
-  name                    = "mopic-volume"
-  size                    = 500
-  initial_filesystem_type = "ext4"
-  description             = "an example volume"
-}
